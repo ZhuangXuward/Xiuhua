@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>snow</title>
+    <style>
+    *{margin: 0;padding: 0;}
+    html{
+        height:100%;
+    }
+    body{
+        height:100%;
+        /*background-color: rgba(0, 0, 0,1);body比较特殊*/
+        background-color: black;
+        overflow: hidden;          
+    }
+    /*.one{
+   
+
+    }*/
+   
+    </style>
+</head>
+<body>
+
+    
+    <!--<div class="one">
+     
+    </div>-->
+    <script>
+        // var h=document.body.offsetHeight;/*body的可视高度*/
+        // alert(h);
+        function Flake(){
+                 //创建一张图片
+               var f=document.createElement('img');
+                 //获得文档宽
+                var w=document.documentElement.clientWidth;
+                 //获得文档高
+                 //实际上，上面html的高和宽都是继承document的  
+                var h=document.documentElement.clientHeight;
+                //定义随机出现的图片
+                var left=Math.random()*w;
+                var top=Math.random()*h;
+              //给图片添加路径在执行函数flake时让他显示出来,    Math.ceil(Math.random()*4是指有四个随机图片。 
+            f.src='images/'+Math.ceil(Math.random()*4)+'.jpg';
+            f.style.position='absolute';
+            //  f.style.z-index='1';
+            f.style.left=left+'px';/*字符串拼接*/
+            f.style.top=top+'px';
+            f.style.transform='scale('+Math.random()+')';
+             //必须把创建出来的img添加到body里才能显示
+            document.body.appendChild(f);
+            function down(){
+               left+=Math.random()*5;
+               top+=Math.random()*3;
+                if(left>w)   left=-20;
+                if(top>h)   top=-20;
+               
+                 f.style.left=left+'px';
+                 f.style.top=top+'px';
+            }
+            setInterval(down,20);
+        }
+     for(var i=0;i<20;i++){
+        new Flake();
+     }
+    </script>
+</body>
+</html>
