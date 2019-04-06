@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>简单计算器</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		body {
+			background: url("../background/ridwhite.png");
+		}
+		* {
+			border: none;
+			font-family: 'Open Sans', sans-serif;
+			padding: 0;
+			margin: 0;
+		}
+		.center {
+			/*background-color: #fff;*/
+			/*border-radius: 50%;*/
+			height: 600px;
+			width: 600px;
+			margin: auto;
+		}
+		h1 {
+			color: #495678;
+			font-size: 30px;
+			margin-top: 20px;
+			padding-top: 50px;
+			display: block;
+			text-align: center;
+		}
+		form {
+			background-color: #495678;
+			margin: 40px auto;
+			padding: 40px 0 30px 40px;
+			width: 280px;
+		}
+		.btn {
+			outline: none;
+			cursor: pointer;
+			font-size: 20px;
+			height: 45px;
+			margin: 5px 0 5px 10px;
+			width: 45px;
+		}
+		.btn, #display, form {
+			border-radius: 25px;
+		}
+		#display {
+			outline: none;
+			background-color: rgb(152, 209, 220);
+			text-align: right;
+			color: rgb(221, 221, 220);
+			font-size: 20px;
+			padding-right: 10px;
+			margin-left: 10px;
+			height: 45px;
+			width: 160px;
+			box-shadow: inset 6px 6px 0px rgb(63, 172, 192);
+		}
+		.number {
+			color: rgb(222, 216, 211);
+			background-color: rgb(114, 119, 139);
+			box-shadow: 0px 5px 0px rgb(95, 102, 128);
+		}
+		.other {
+			color: rgb(222, 216, 211);
+			background-color: rgb(227, 132, 76);
+			box-shadow: 0px 5px 0px rgb(231, 106, 61);
+		}
+		.operator {
+			color: rgb(114, 119, 139);
+			background-color: rgb(222, 222, 220);
+			box-shadow: 0px 5px 0px rgb(190, 190, 190);
+		}
+		.other:active {
+			transform: translateY(2px);
+			box-shadow: 0 2px rgb(231, 106, 61);
+		}
+		.number:active {
+			transform: translateY(2px);
+			box-shadow: 0 0px rgb(95, 102, 128);
+		}
+		.operator:active {
+			transform: translateY(2px);
+			box-shadow: 0 0px rgb(190, 190, 190);
+		}
+	</style>
+</head>
+<body>
+	<div class="center">
+		<h1>HTML CSS, JavaScript 计算器</h1>
+		<form>
+			<input type="button" id="clear" class="btn other" value="C">
+			<input type="text" id="display"><br/>
+			<input type="button" value="7" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="8" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="9" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="+" class="btn operator" onclick="getValue(this.value)"><br/>
+
+			<input type="button" value="4" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="5" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="6" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="*" class="btn operator" onclick="getValue(this.value)"><br/>
+
+			<input type="button" value="1" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="2" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="3" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="-" class="btn operator" onclick="getValue(this.value)"><br/>
+
+			<input type="button" value="0" class="btn number" onclick="getValue(this.value)">
+			<input type="button" value="." class="btn operator" onclick="getValue(this.value)">
+			<input type="button" value="/" class="btn operator" onclick="getValue(this.value)">
+			<input type="button" value="=" class="btn other" onclick="calculate()">
+		</form>
+	</div>
+
+	<script>
+		document.getElementById("clear").addEventListener("click", function(){
+			document.getElementById("display").value="";
+		});
+		function getValue(value) {
+			document.getElementById("display").value+=value;
+		};
+		function calculate() {
+			var result=document.getElementById("display").value;
+			document.getElementById("display").value="";
+			document.getElementById("display").value=eval(result);
+		};
+	</script>
+</body>
+</html>

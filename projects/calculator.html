@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>简单计算器</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		table {
+			margin: 200px auto;
+			text-align: center;
+			background-color: rgb(251, 249, 242);
+			box-shadow: 3px 3px 10px #555;
+		}
+		body {
+			background: url("../background/ridwhite.png");
+		}
+		input {
+			background-color: rgb(251, 249, 242);
+			text-align: center;
+			vertical-align: middle;
+		}
+		button {
+			width: 23px;
+			height: 23px;
+			padding: 0;
+			margin: 2px;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+	<table border="1">
+		<caption style="padding: 2px"><b>简单计算器<b></caption>
+		<tr>
+			<td>第一个数:</td>
+			<td><input id="firstNum" placeholder="输入数字"></td>
+		</tr>
+		<tr>
+			<td>第二个数:</td>
+			<td><input id="secondNum" placeholder="输入数字"></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				&nbsp<button onclick="add()">＋</button>
+				&nbsp<button onclick="subtract()">－</button>
+				&nbsp<button onclick="multiple()">×</button>
+				&nbsp<button onclick="devide()">÷</button>
+			</td>
+		</tr>
+		<tr>
+			<td>结果：</td>
+			<td>
+				<p id="result"></p>
+			</td>
+		</tr>
+	</table>
+
+	<script>
+		var result=new Number; //static value
+
+		function add() {
+			var a=document.getElementById("firstNum").value;
+			var b=document.getElementById("secondNum").value;
+			if (a==""||b==""||isNaN(a)||isNaN(b)) {
+				sendNum("no");
+				return;
+			}
+			result=Number(a)+Number(b); //Number(x) turn var x into number x.
+			sendNum(result);
+		}
+
+		function subtract() {
+			var a=document.getElementById("firstNum").value;
+			var b=document.getElementById("secondNum").value;
+			if (a==""||b==""||isNaN(a)||isNaN(b)) {
+				sendNum("no");
+				return;
+			}
+			result=Number(a)-Number(b); //Number(x) turn var x into number x.
+			sendNum(result);
+		}
+
+		function multiple() {
+			var a=document.getElementById("firstNum").value;
+			var b=document.getElementById("secondNum").value;
+			if (a==""||b==""||isNaN(a)||isNaN(b)) {
+				sendNum("no");
+				return;
+			}
+			result=Number(a)*Number(b); //Number(x) turn var x into number x.
+			sendNum(result);
+		}
+
+		function devide() {
+			var a=document.getElementById("firstNum").value;
+			var b=document.getElementById("secondNum").value;
+			if (a==""||b==""||isNaN(a)||isNaN(b)) {
+				sendNum("no");
+				return;
+			}
+			else if (b=="0") {
+				sendNum("no_devide");
+				return;
+			}
+			result=Number(a)/Number(b); //Number(x) turn var x into number x.
+			sendNum(result);
+		}
+
+		function sendNum(re) {
+			if (re=="no") 
+				alert("请输入数字！");
+			else if (re=="no_devide")
+				alert("分母不能为0！");
+			else
+				document.getElementById("result").innerHTML=re;
+		}
+	</script>
+</body>
+</html>
