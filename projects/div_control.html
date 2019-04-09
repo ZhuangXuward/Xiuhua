@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>我的一些小项目</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		body {
+			background: url("../background/ridwhite.png");
+		}
+		.main {
+			margin: 30px;
+			text-align: center;
+		}
+		#rectangle {
+			width: 100px;
+			height: 100px;
+			margin: 20px auto;	
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<button>变宽</button>
+		<button>变高</button>
+		<button>变色</button>
+		<button>隐藏</button>
+		<button>重置</button>
+		<p id="rectangle"></p>
+	</div>
+	<script>
+		function changeCss(oDiv, oAttr, oVal) {
+			oDiv.style[oAttr] = oVal; //变量访问样式属性，用ele.style['oAttr']
+		}
+		window.onload = function() {
+			var oBtn = document.getElementsByTagName("button");
+			var oDiv = document.getElementById("rectangle");
+			var oAttr = ["width", "height", "backgroundColor", "display", "display"];
+			var oVal = ["200px", "200px", "blue", "none", "block"];
+			for(var i = 0; i < oBtn.length; ++ i) {
+				oBtn[i].index = i;
+				oBtn[i].onclick = function() { 
+				//这里绑定的回调函数是匿名函数，不会执行，但是当事件发生调用函数时，循环已经结束了，所以拿的是最后的值
+
+					if (this.index == 4) { //内部引用自己用this，用oBtn[i]会报错。
+						oDiv.style.cssText = "";
+					}
+					// this.index == oBtn.length - 1 && (oDiv.style.cssText = "");
+					changeCss(oDiv, oAttr[this.index], oVal[this.index]);
+				}
+			}
+		}
+	</script>
+</body>
+</html>
