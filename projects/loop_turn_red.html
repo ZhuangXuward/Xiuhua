@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用循环使三个DIV变红色</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		body {
+			background: url("../background/ridwhite.png");
+		}
+		#main {
+			width: 330px; /*margin的左右不重叠，上下重叠。*/
+			margin: 10px auto;
+		}
+		#main div {
+			float: left;
+			width:100px;
+			height:100px;
+			margin:0 5px;
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<center><button>点击按钮使下面三个DIV变红色</button></center>
+	<div id="main">
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	<script>
+		var oBtn = document.getElementsByTagName("button")[0];
+		var oDiv = document.getElementById("main").getElementsByTagName("div");
+		oBtn.onclick = function() {
+			switch(oDiv[0].style.backgroundColor) {
+				case "black":
+					for(var i = 0; i < oDiv.length; ++ i) {
+					oDiv[i].style.background = "red";
+					}
+					break;
+				case "red":
+					for(var i = 0; i < oDiv.length; ++ i) {
+					oDiv[i].style.background = "black";
+					}
+					break;
+				default://只能访问内联样式，一开始oDiv[0].style.backgroundColor=""
+					for(var i = 0; i < oDiv.length; ++ i) {
+					oDiv[i].style.background = "red";
+					}
+			}
+		}
+		
+	</script>
+</body>
+</html>
