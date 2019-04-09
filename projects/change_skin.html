@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>网页换肤</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		body {
+			background-color: rgb(255, 221, 221);
+		}
+		.main {
+			width: 500px;
+			margin: 0 auto;
+		}
+		button {
+			width: 12px;
+			height: 12px;
+			margin: 2px;
+			padding: 0;
+			outline: none;
+			border: 0;
+			text-align: center;
+		}
+		#red {
+			background-color: red;
+		}
+		#green {
+			background-color: green;
+		}
+		#black {
+			background-color: black;
+		}
+		#content {
+			margin-top: 5px;
+			text-align: center;
+			border-collapse: collapse;
+			background-color: red;
+		}
+		#content td {
+			width: 600px;
+			height: 23px;
+			border: 1px solid white;
+			font-size: small;
+			color: white;
+		}
+		td:hover {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		li {
+			width: 4px;
+			height: 4px;
+			background-color: white;
+			list-style-type: none;
+			margin-left: 4px;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		
+		<button id="red" title="红色" class="current"><li></li></button>
+		<button id="green" title="绿色" ><li></li></button>
+		<button id="black" title="黑色"><li></li></button>
+		<table id="content">
+			<tr>
+				<td>新闻</td>
+				<td>娱乐</td>
+				<td>体育</td>
+				<td>电影</td>
+				<td>音乐</td>
+				<td>旅游</td>
+			</tr>
+		</table>
+		<p id="demotest"></p>
+	</div>
+	<script>
+		var setTacolor = function(ccolor) {
+			var ta = document.getElementById("content");
+			ta.style.backgroundColor = ccolor;
+		}
+		var setBacolor = function(ccolor) {
+			document.body.style.backgroundColor = ccolor;
+		}
+		var oTa = document.getElementById("content");
+		var baColor = ["rgb(255, 221, 221)", "rgb(163, 197, 168)", "rgb(204, 204, 204)"]
+		;
+		var taColor = ["red", "green", "black"];
+		var oBtn = document.getElementsByTagName("button");
+		var oLi = document.getElementsByTagName("li");
+		window.onload = function() {
+			for(var i = 0; i < oBtn.length; ++ i) {
+				oBtn[i].index = i;
+				oBtn[i].onclick = function() {
+					for(var j = 0; j < oBtn.length; ++ j) {
+						j != this.index && (oLi[j].style.display = "none");
+					}
+					oLi[this.index].style.display = "block";
+					setTacolor(taColor[this.index]);
+					setBacolor(baColor[this.index]);
+				}
+			}
+		}
+	
+	</script>
+</body>
+</html>
