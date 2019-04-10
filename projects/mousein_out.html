@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>鼠标移入/移出改变样式</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		#div1 {
+			width: 150px;
+			height: 150px;
+			color: white;
+			font-size: 12px;
+			padding: 10px;
+			margin: 0 auto;
+			cursor: crosshair;
+			background-color: black;
+			border: 10px black solid;
+
+		}
+	</style>
+	<script>
+		window.onload = function() {
+			var oDiv = document.getElementById('div1');
+			oDiv.onmouseover = function() {
+				oDiv.style.cssText = "background: white; border:10px red solid; color: red";
+			}
+			oDiv.onmouseout = function() {
+				oDiv.style.cssText = "";
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">
+		鼠标移入改变样式，移出恢复样式。
+	</div>
+</body>
+</html>
