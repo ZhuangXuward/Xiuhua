@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>密码提示框</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		#tips {
+			width: 200px;
+			border: 1px red solid;
+			padding: 4px;
+			margin-top: 3px;
+			font-size: 12px;
+			background-color: orange;
+			position: relative;
+			left: 120px;
+			display: none;
+		}
+		.container {
+			width: 400px;
+			margin: 0 auto;
+			font-size: 12px;
+			text-align: center;
+		}
+		label {
+			position: relative;
+			top: -2px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function() {
+			var oLab = document.getElementsByTagName('label')[0];
+			var oTips = document.getElementById('tips');
+			oLab.onmouseover = function() {
+				oTips.style.display = "block";
+			}
+			oLab.onmouseout = function() {
+				oTips.style.display = "";
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<input type="checkbox" id="pass">
+		<label for="pass">两周内自动登录</label>
+		<div id="tips">为了您的信息安全，请不要在网吧或者其他场所勾选此项。</div>
+	</div>
+</body>
+</html>
