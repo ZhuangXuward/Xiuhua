@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>贪吃蛇</title>
+	<link rel="shortcut icon" href="../icons/project.jpg">
+	<style type="text/css">
+		body {
+			background-color: rgb(253, 255, 223);
+			min-width: 1000px;
+		}
+		canvas {
+			display: block;
+			position: absolute;
+			left: 50%;
+			top: 50px;
+			transform: translate(-50%, 0%);
+			background-color: rgb(243, 215, 181);
+		}
+		input {
+			border: none;
+		}
+		#container {
+			position: relative;
+			width: 100%;
+			background-color: rgb(253, 255, 223);
+		}
+		#control {
+			position: absolute;
+			left: 50%;
+			transform: translate(300px, 0);
+			width: 200px;
+			height: 600px;
+			margin: 50px 20px 0 0;
+			/*border: 1px solid red;*/
+		}
+		#score {
+			position: absolute;
+			left: 50px;
+			bottom: 0;
+			font-size: 25px;
+			font-weight: bolder;
+			color: black;
+			width: 100px;
+			position: absolute;
+		}
+		#replay {
+			position: absolute;
+			left: 50%;
+			top: 0;
+			transform: translate(-50%, 0);
+			outline: none;
+			cursor: pointer;
+			font-size: 25px;
+			height: 100px;
+			margin: 5px 0 5px 10px;
+			width: 100px;
+			border-radius: 50%;
+			color: white;
+			background-color: rgb(227, 132, 76);
+			box-shadow: 0px 5px 0px rgb(231, 106, 61);
+		}
+		#replay:active {
+			transform: translateY(2px);
+			box-shadow: 0 2px rgb(231, 106, 61);
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="control">
+			<input type="button" id="replay" value="START" onclick="newGame()">
+			<p id="score"> SCORE:0</p>
+		</div>
+		<div id="game">
+			<canvas id="demo">Sorry your browser does not support canvas.</canvas>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var OCANVAS = document.getElementById('demo');
+		var CTX = OCANVAS.getContext("2d");
+		var SIZE = 20;
+		var snake = new Array();
+		var MAX_WIDTH = 600;
+		var MAX_HEIGHT = 600;
+		var HEADX = 0;
+		var HEADY = 0;
+		var FOODX = 0;
+		var FOODY = 0;
+		var getFoodcolor;
+		var DIR = "right";
+		var TIME = 100;
+		var SCORE = 0;
+		var interval = null;
+		OCANVAS.width = MAX_WIDTH;
+		OCANVAS.height = MAX_HEIGHT;
+		window.onload = function() {
+			newGame();
+		};
+
+		function newGame() {
+			snake = [];
+			HEADY = 0;
+			HEADX = 0;
+			DIR = "right";
+			window.clearInterval(interval);
+			interval = null;
+			document.getElementById('score').innerHTML = "SCORE:0";
+			//若不清除interval，速度将会越来越快。??why 猜测：在原有interval基础上继续setInterval。
+			//初始化画布
+			CTX.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+			//画蛇
+			drawSnake();
+			//放置食物
+			setFood();
+			//移动蛇
+			interval = window.setInterval(move, TIME);
+		}
+
+		window.onkeydown = function(event) {
+			var code = event.keyCode - 37;//this.keyCode也可以。
+			switch(code) {
+				case 0: DIR = "left"; break;
+				case 1: DIR = "up"; break;
+				case 2: DIR = "right"; break;
+				case 3: DIR = "down"; break;
+			}
+		}
+
+		function drawSnake() {
+			CTX.fillRect(HEADX, HEADY, SIZE, SIZE);
+			snake.push([HEADX, HEADY]);
+			//draw snake head
+			drawBody(HEADX - SIZE, HEADY, HEADX - 2*SIZE, HEADY);  
+			//只是一开始执行，为right，不需要其他方向。
+		}
+
+		function drawBody(x1, y1, x2, y2) {
+			CTX.fillRect(x1, y1, SIZE, SIZE);
+			CTX.fillRect(x2, y2, SIZE, SIZE);
+			snake.push([x1, y1]);
+			snake.push([x2, y2]);
+		}
+
+		function setFood() {
+			FOODX = SIZE * Math.floor(Math.random() * MAX_WIDTH / SIZE);
+			FOODY = SIZE * Math.floor(Math.random() * MAX_HEIGHT / SIZE);
+			var foodColor = Math.random();
+			if (foodColor <= 0.2)
+				CTX.fillStyle = "orange";
+			else if (foodColor > 0.2 && foodColor <= 0.5)
+				CTX.fillStyle = "green";
+			else if (foodColor > 0.5 && foodColor <= 0.7)
+				CTX.fillStyle = "blue";
+			else if (foodColor > 0.7 && foodColor <= 0.9)
+				CTX.fillStyle = "red";
+			else if (foodColor > 0.9)
+				CTX.fillStyle = "yellow";
+			CTX.fillRect(FOODX, FOODY, SIZE, SIZE);
+			getFoodcolor = CTX.fillStyle;
+		}
+
+
+		function move() {
+			switch(DIR) {
+				case "up": HEADY -= SIZE; break;
+				case "right": HEADX += SIZE; break;
+				case "left": HEADX -= SIZE; break;
+				case "down": HEADY += SIZE; break;
+			}
+
+			if(HEADX < 0 || HEADX > MAX_WIDTH - SIZE || HEADY < 0 || HEADY > MAX_HEIGHT - SIZE) { //注意是MAX_HEIGHT-SIZE rather than only MAX_HEIGHT nor MAX_HEIGHT + SIZE.
+				document.getElementById('score').innerHTML = "碰壁了哦(┬＿┬)";
+				newGame();
+				return;
+				// window.location.reload();
+				// 使用reload()会多次alert？使用newGame()会有意想不到的问题：重新加载后，蛇身有问题。why？？
+			}
+			//arrayObject.length为属性，不是方法length()!
+			for (var i = 1; i < snake.length; ++ i) {
+				//HEADX == snake[i][0] && HEADY == snake[i][1] is wrong!
+				if(snake[0][0] == snake[i][0] && snake[0][1] == snake[i][1]) {
+					alert("你撞到自己的身体啦！");
+					window.location.reload();
+					// 使用newGame()会多次alert？
+				}
+			}
+			
+			moveIn(HEADX, HEADY);
+		}
+
+		function moveIn(x, y) {
+			CTX.fillStyle = "black";
+			CTX.fillRect(x, y, SIZE, SIZE);
+			//redraw the snake head.
+
+			var newSnake = [[HEADX, HEADY]];
+			snake = newSnake.concat(snake);
+
+			if(HEADX == FOODX && HEADY == FOODY) { //如何使得吃到食物才变色
+				// CTX.fillStyle = getFoodcolor;
+				SCORE++;
+				document.getElementById('score').innerHTML = SCORE;
+				setFood();
+				return;
+			}
+			var snakeTail = snake.pop();
+			//get new snake.
+			CTX.clearRect(snakeTail[0], snakeTail[1], SIZE, SIZE);
+			//clear the snaketail.
+			newSnake = [];
+		}
+
+	</script>
+</body>
+</html>
